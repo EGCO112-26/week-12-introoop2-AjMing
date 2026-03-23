@@ -22,14 +22,32 @@ jobs:
         command: "./student mama 19 mumu 18 moo 20"
         input: ''
         expected-output: |-
-          Name: moo
-          Age: 20
+          Youngest student
+          Name: mumu
+          Age: 18
         comparison-method: contains
         timeout: 10
         max-score: 10
+    - name: test2
+      id: test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: test2
+        setup-command: ''
+        command: "./student  Ohm 18 Art 20  Pete 18"
+        input: ''
+        expected-output: |
+          Youngest student
+          Name: Ohm
+          Age: 18
+          Name: Pete
+          Age: 18
+        comparison-method: contains
+        timeout: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST_RESULTS: "${{steps.test.outputs.result}}"
+        TEST2_RESULTS: "${{steps.test2.outputs.result}}"
       with:
-        runners: test
+        runners: test,test2
